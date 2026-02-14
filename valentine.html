@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff9ecf, #ff6fa5);
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+h1 {
+  color: #ff2e7a;
+  font-size: 32px;
+}
+
+.buttons {
+  margin-top: 30px;
+  position: relative;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.yes {
+  background: #ff2e7a;
+  color: white;
+  box-shadow: 0 5px 15px rgba(255,46,122,0.4);
+}
+
+.no {
+  background: #ddd;
+  position: absolute;
+}
+
+.yes:hover {
+  transform: scale(1.15);
+}
+
+.heart {
+  position: absolute;
+  font-size: 20px;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float {
+  from {transform: translateY(0) scale(1); opacity:1}
+  to {transform: translateY(-800px) scale(1.5); opacity:0}
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: pink;
+  animation: fall 3s linear infinite;
+}
+
+@keyframes fall {
+  from {transform: translateY(-100px)}
+  to {transform: translateY(800px)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="mainCard">
+  <h1>Will You Be My Valentine? 💖</h1>
+  <div class="buttons">
+    <button class="yes" onclick="sayYes()">Yes 💘</button>
+    <button class="no" id="noBtn">No 😢</button>
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const noBtn = document.getElementById('noBtn');
+
+noBtn.addEventListener('mouseover', () => {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+  noBtn.style.left = x + 'px';
+  noBtn.style.top = y + 'px';
+});
+
+function createHearts() {
+  for(let i=0;i<30;i++){
+    let heart = document.createElement('div');
+    heart.innerHTML = '❤️';
+    heart.classList.add('heart');
+    heart.style.left = Math.random()*100+'vw';
+    heart.style.animationDuration = (Math.random()*3+2)+'s';
+    document.body.appendChild(heart);
+  }
+}
+
+function createConfetti(){
+  for(let i=0;i<80;i++){
+    let conf = document.createElement('div');
+    conf.classList.add('confetti');
+    conf.style.left = Math.random()*100+'vw';
+    conf.style.background = ['#ff2e7a','#ffc0cb','#ff6fa5'][Math.floor(Math.random()*3)];
+    conf.style.animationDuration = (Math.random()*2+2)+'s';
+    document.body.appendChild(conf);
+  }
+}
+
+function sayYes(){
+  document.getElementById('bgMusic').play();
+  document.body.innerHTML = `
+    <div style="text-align:center; color:white; font-size:40px; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; background:linear-gradient(135deg,#ff6fa5,#ff2e7a);">
+      🎉 Yay!!! You clicked Yes. Congratulations 🎉<br>
+      You are my Valentine now❤️🥰
+      <div style="font-size:60px; margin-top:20px;">💖💘💝</div>
+    </div>
+  `;
+  createHearts();
+  createConfetti();
+}
+</script>
+
+</body>
+</html>
